@@ -1,7 +1,7 @@
 <script setup></script>
 
 <template>
-  <IndexSMain />
+  <LoginSMain />
 </template>
 
 <style scoped lang="scss"></style>

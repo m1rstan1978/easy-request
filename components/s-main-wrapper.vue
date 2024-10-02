@@ -1,5 +1,13 @@
 <script setup></script>
 
-<template></template>
+<template>
+  <main class="main-wrapper">
+    <NuxtPage />
+  </main>
+</template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.main-wrapper {
+  @include resolution-style();
+}
+</style>

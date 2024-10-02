@@ -1,8 +1,15 @@
-html {
-  scrollbar-gutter: stable;
-}
+// html {
+//   scrollbar-gutter: stable;
+// }
 body {
   overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+  background: $background_gray;
+}
+
+*::-ms-reveal {
+  display: none;
 }
 
 *,
@@ -106,7 +113,7 @@ button::-moz-focus-inner {
 
 ::selection {
   color: white;
-  background-color: $red;
+  background-color: $green;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
