@@ -53,6 +53,8 @@ function handleKeydown(e) {
   } else if (e.key === "ArrowDown") {
     setActiveDown(e);
     scrollToActive("ArrowDown");
+  } else if (e.key === "Enter") {
+    setItem(props.options[indexElement.value]);
   }
 }
 
@@ -117,6 +119,7 @@ onUnmounted(() => {
         (['dropdown-content__item' + (idx + 1)],
         { activeDropdown: idx === indexElement })
       "
+      tabindex="1"
       @mousemove="setActiveIndex($event, idx)"
       @click="setItem(option)"
     >
