@@ -31,8 +31,8 @@ function updateValue(e) {
   font-size: 14px;
   color: $text_color;
   transition: all 0.4s ease;
-}
-.input::placeholder {
-  color: $color_weak;
+  &::placeholder {
+    color: $color_weak;
+  }
 }
 </style>

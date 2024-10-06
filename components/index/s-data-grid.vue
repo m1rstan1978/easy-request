@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import Table from "@/components/index/table/s-table.vue";
+</script>
 
 <template>
   <div class="data-grid">
@@ -7,7 +9,13 @@
         <UiSButton>Создать</UiSButton>
       </div>
     </div>
-    <IndexSearchSSearchFilter />
+    <div class="data-grid__filter">
+      <IndexSearchSSearchFilter />
+    </div>
+    <div class="data-grid__table">
+      <Table />
+    </div>
+    1
   </div>
 </template>
 
@@ -17,6 +25,7 @@
   width: 100%;
   border-radius: 8px;
   padding: 10px 20px;
+  margin-bottom: 20px;
 
   &__header {
     display: flex;
@@ -25,6 +34,12 @@
   }
   &__button {
     min-width: 78px;
+  }
+  &__filter {
+    margin-bottom: 30px;
+  }
+  &__table {
+    min-height: calc(100vh - 350px);
   }
 }
 </style>
