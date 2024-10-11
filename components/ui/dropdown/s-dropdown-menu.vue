@@ -62,6 +62,7 @@ function setOption(option) {
   height: 100%;
   &__trigger {
     @include no-select();
+    height: 100%;
     cursor: pointer;
   }
 }
@@ -70,6 +71,7 @@ function setOption(option) {
 }
 
 .v-enter-from {
+  height: 0;
   opacity: 0;
 }
 

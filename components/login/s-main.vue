@@ -7,14 +7,14 @@ const openToast = ref(false);
     <div class="login__back"></div>
     <UiSToast
       :openToast="openToast"
-      name="center"
+      position="center"
       :timeTimeOut="3000"
       @closeToast="openToast = false"
       iconSrc="/images/ui/error-icon.svg"
       title="Ошибка авторизации"
       description="Неверно введены логин или пароль"
     />
-    <LoginSCard />
+    <LoginSCard @click="openToast = !openToast" />
   </section>
 </template>
 

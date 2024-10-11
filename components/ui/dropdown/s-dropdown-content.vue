@@ -12,7 +12,11 @@ let dropdownRef = ref(null);
 
 function closeWindow(e) {
   const checkClassName = e.target.className.includes("dropdown");
-  if (!checkClassName) {
+  if (
+    !checkClassName ||
+    dropdownRef.value !==
+      e.target?.closest(".dropdown-menu")?.querySelector(".dropdown-content")
+  ) {
     emit("update:modelValue", false);
   }
 }
@@ -154,6 +158,14 @@ onUnmounted(() => {
       border-end-end-radius: 5px;
       border-end-start-radius: 5px;
     }
+  }
+  &::-webkit-scrollbar {
+    width: 6px;
+    background: rgba(0, 0, 0, 0.07);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $green;
+    border-radius: 3px;
   }
 }
 .activeDropdown {

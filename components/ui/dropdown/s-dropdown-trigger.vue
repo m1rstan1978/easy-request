@@ -1,6 +1,6 @@
 <script setup>
 const props = defineProps({
-  name: String,
+  name: [String, Number],
   activeItem: Object,
 });
 </script>
@@ -24,7 +24,7 @@ const props = defineProps({
 <style scoped lang="scss">
 .dropdown-trigger {
   width: 100%;
-
+  height: 100%;
   &__content {
     display: flex;
     align-items: center;

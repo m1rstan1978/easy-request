@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   openToast: Boolean,
-  name: String,
+  position: String,
   timeTimeOut: Number,
   iconSrc: String,
   title: String,
@@ -13,14 +13,14 @@ let timer = null;
 
 const arrSettings = [
   {
-    name: "center",
+    position: "center",
     styleComponent: {
       top: "40px",
       marginLeft: "0%",
     },
   },
   {
-    name: "right",
+    position: "right",
     styleComponent: {
       bottom: "20px",
       right: "20px",
@@ -28,7 +28,7 @@ const arrSettings = [
   },
 ];
 const getStyle = computed(() => {
-  return arrSettings.find(el => el.name === props.name);
+  return arrSettings.find(el => el.position === props.position);
 });
 
 function clearTimer() {
@@ -130,30 +130,30 @@ watch(
 }
 
 .v-enter-active {
-  transition: all 0.15s ease-out;
+  transition: all 0.12s ease-out;
 }
 
 .v-enter-from {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(30px) scale(0.95);
 }
 
 .v-enter-to {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .v-leave-active {
-  transition: all 0.15s ease-in;
+  transition: all 0.12s ease-in;
 }
 
 .v-leave-from {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .v-leave-to {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(30px) scale(1);
 }
 </style>

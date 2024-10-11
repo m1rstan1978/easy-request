@@ -15,7 +15,14 @@ import Table from "@/components/index/table/s-table.vue";
     <div class="data-grid__table">
       <Table />
     </div>
-    1
+    <div class="data-grid__menu">
+      <div class="data-grid__counter">
+        <IndexSCounter />
+      </div>
+      <div class="data-grid__pagination">
+        <UiSPagination />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -39,7 +46,13 @@ import Table from "@/components/index/table/s-table.vue";
     margin-bottom: 30px;
   }
   &__table {
-    min-height: calc(100vh - 350px);
+    min-height: calc(100vh - 360px);
+    margin-bottom: 30px;
+  }
+  &__menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 </style>
