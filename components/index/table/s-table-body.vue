@@ -1,77 +1,28 @@
 <script setup>
 const tBodyArr = [
   {
-    number: 133,
-    create: "17.04.2024",
+    number: 1,
+    created: "10.10.2024",
     house: "Лесная, 10",
-    apartment: "3",
-    applicant: "Забавкин Дмитрий Валентинович",
-    des: "Подкрасить царапины на стенах в гостиной",
-    deadline: "24.04.2024 10:00",
+    flat: "3",
+    first_name: "Дмитрий",
+    surname: "Забавкин",
+    middle_name: "Валентинович",
+    textarea: "Подкрасить царапины на стенах в гостиной",
+    deadline: "24.10.2024",
+    phone: "8 (953) 678-66-16",
   },
   {
-    number: 134,
-    create: "10.04.2024",
-    house: "Мира, 22",
-    apartment: "18",
-    applicant: "Чудов Валентин Александрович",
-    des: "Заменить потрескавшуюся плитку в ванной",
-    deadline: "17.04.2024 14:30",
-  },
-  {
-    number: 135,
-    create: "03.04.2024",
-    house: "Речная, 3",
-    apartment: "5",
-    applicant: "Пестряков Павел Павлович",
-    des: "Отремонтировать протекающий кран на кухне",
-    deadline: "10.04.2024 09:15",
-  },
-  {
-    number: 135,
-    create: "03.04.2024",
-    house: "Речная, 3",
-    apartment: "5",
-    applicant: "Пестряков Павел Павлович",
-    des: "Отремонтировать протекающий кран на кухне",
-    deadline: "10.04.2024 09:15",
-  },
-  {
-    number: 135,
-    create: "03.04.2024",
-    house: "Речная, 3",
-    apartment: "5",
-    applicant: "Пестряков Павел Павлович",
-    des: "Отремонтировать протекающий кран на кухне",
-    deadline: "10.04.2024 09:15",
-  },
-
-  {
-    number: 135,
-    create: "03.04.2024",
-    house: "Речная, 3",
-    apartment: "5",
-    applicant: "Пестряков Павел Павлович",
-    des: "Отремонтировать протекающий кран на кухне",
-    deadline: "10.04.2024 09:15",
-  },
-  {
-    number: 135,
-    create: "03.04.2024",
-    house: "Речная, 3",
-    apartment: "5",
-    applicant: "Пестряков Павел Павлович",
-    des: "Отремонтировать протекающий кран на кухне",
-    deadline: "10.04.2024 09:15",
-  },
-  {
-    number: 135,
-    create: "03.04.2024",
-    house: "Речная, 3",
-    apartment: "5",
-    applicant: "Пестряков Павел Павлович",
-    des: "Отремонтировать протекающий кран на кухне",
-    deadline: "10.04.2024 09:15",
+    number: 2,
+    created: "19.11.2024",
+    house: "Лесная, 10",
+    flat: "3",
+    first_name: "Александр",
+    surname: "Лемов",
+    middle_name: "Дмитриевич",
+    textarea: "Отрегулировать створки пластиковых окон.",
+    deadline: "01.01.2025",
+    phone: "8 (912) 555-12-12",
   },
 ];
 
@@ -84,7 +35,12 @@ function getShortName(fullName) {
 
 <template>
   <tbody class="tbody">
-    <tr class="tbody__tr" v-for="(item, idx) in tBodyArr" :key="idx">
+    <tr
+      class="tbody__tr"
+      v-for="(item, idx) in tBodyArr"
+      :key="idx"
+      @click="$emit('setItem', item)"
+    >
       <td class="tbody__number">
         <div class="tbody__number_item">
           {{ item.number }}
@@ -92,22 +48,26 @@ function getShortName(fullName) {
       </td>
       <td class="tbody__text">
         <div class="tbody__text_item">
-          {{ item.create }}
+          {{ item.created }}
         </div>
       </td>
       <td class="tbody__text">
         <div class="tbody__text_item">
-          {{ `${item.house}, кв.${item.apartment}` }}
+          {{ `${item.house}, кв.${item.flat}` }}
         </div>
       </td>
       <td class="tbody__text">
         <div class="tbody__text_item">
-          {{ getShortName(item.applicant) }}
+          {{
+            getShortName(
+              `${item.surname} ${item.first_name} ${item.middle_name}`
+            )
+          }}
         </div>
       </td>
       <td class="tbody__des">
         <div class="tbody__des_item">
-          {{ item.des }}
+          {{ item.textarea }}
         </div>
       </td>
       <td class="tbody__text">
@@ -130,7 +90,7 @@ function getShortName(fullName) {
     transition: all 0.2s ease;
     cursor: pointer;
     &:hover {
-      background: rgba(0, 0, 0, 0.04);
+      background: rgba(0, 0, 0, 0.03);
     }
   }
   &__number {
@@ -164,8 +124,5 @@ function getShortName(fullName) {
       font-size: 14px;
     }
   }
-}
-.activeHoverTr {
-  background: rgba(0, 0, 0, 0.03);
 }
 </style>

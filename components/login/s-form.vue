@@ -104,13 +104,7 @@ watch(inputValPassword, val => {
     </div>
     <div class="form__submit">
       <div class="form__submit_btn">
-        <UiSButton
-          type="submit"
-          :loading="isLoading"
-          borderColor="rgba(255, 255, 255, 0.3)"
-          topColor="white"
-          >Войти</UiSButton
-        >
+        <UiSButton type="submit" :loading="isLoading">Войти</UiSButton>
       </div>
     </div>
   </form>

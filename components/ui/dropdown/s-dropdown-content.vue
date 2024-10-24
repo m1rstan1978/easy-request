@@ -3,6 +3,7 @@ const props = defineProps({
   options: Array,
   modelValue: Boolean,
   positionContent: String,
+  activeItem: Object,
 });
 
 const emit = defineEmits();
@@ -62,6 +63,21 @@ function handleKeydown(e) {
   }
 }
 
+function scrollToActiveItem() {
+  if (!props.activeItem) {
+    return;
+  }
+  const container = dropdownRef.value;
+  const findIndexActiveElement = props.options.findIndex(
+    el => el.name === props.activeItem.name
+  );
+  const children = container?.children[findIndexActiveElement];
+  container.scrollTo({
+    top: children.offsetTop,
+  });
+  indexElement.value = findIndexActiveElement;
+}
+
 function scrollToActive(nameKey) {
   const container = dropdownRef.value;
   const children = container?.children[indexElement.value];
@@ -95,6 +111,7 @@ document.addEventListener("click", closeWindow);
 onMounted(() => {
   const elHtml = document.querySelector(".dropdown-content");
   elHtml.focus();
+  scrollToActiveItem();
 });
 
 onUnmounted(() => {
@@ -151,12 +168,12 @@ onUnmounted(() => {
     transition: all 0.1s ease-out;
     cursor: pointer;
     &:nth-child(1) {
-      border-top-right-radius: 5px;
-      border-top-left-radius: 5px;
+      border-top-right-radius: 2px;
+      border-top-left-radius: 2px;
     }
     &:last-child {
-      border-end-end-radius: 5px;
-      border-end-start-radius: 5px;
+      border-end-end-radius: 2px;
+      border-end-start-radius: 2px;
     }
   }
   &::-webkit-scrollbar {

@@ -31,3 +31,8 @@ $color_weak: #999999;
   -ms-user-select: none;
   user-select: none;
 }
+
+@mixin grid-column($start, $end) {
+  grid-column-start: $start;
+  grid-column-end: $end;
+}

@@ -3,17 +3,25 @@ const props = defineProps({
   loading: Boolean,
   borderColor: String,
   topColor: String,
+  styleButton: Object,
 });
 </script>
 
 <template>
-  <button class="button" :class="{ buttonIsLoadingScale: loading }">
+  <button
+    class="button"
+    :class="{ buttonIsLoadingScale: loading }"
+    :style="styleButton"
+  >
     <div class="button__text" :class="{ buttonIsLoading: loading }">
       <slot />
     </div>
     <div class="button__spinner" v-if="loading">
       <div class="button__spinner_spin">
-        <UiSSpinner :borderColor="borderColor" :topColor="topColor" />
+        <UiSSpinner
+          :borderColor="!borderColor ? 'rgba(255, 255, 255, 0.3)' : borderColor"
+          :topColor="!topColor ? 'white' : topColor"
+        />
       </div>
     </div>
   </button>

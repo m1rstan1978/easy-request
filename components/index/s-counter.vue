@@ -30,7 +30,11 @@ function setOption(item) {
       <span class="counter__span">1500 записей</span>
     </div>
     <div class="counter__dropdown">
-      <DropdownMenu :options="paginationItems" @setOption="setOption">
+      <DropdownMenu
+        :options="paginationItems"
+        @setOption="setOption"
+        :activeItem="activeItem"
+      >
         <DropdownTrigger
           :name="!activeItem ? 'Дом' : activeItem.name"
           :activeItem="activeItem"

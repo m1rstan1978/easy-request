@@ -3,8 +3,9 @@ import DropdownContent from "@/components/ui/dropdown/s-dropdown-content.vue";
 
 const props = defineProps({
   options: Array,
+  idx: Number,
+  activeItem: Object,
 });
-
 const visibleContent = ref(false);
 const positionContent = ref(null);
 const triggerMenu = ref(null);
@@ -35,7 +36,9 @@ function toggleDropdownHeight() {
 }
 
 function setOption(option) {
-  emit("setOption", option);
+  props?.idx || props?.idx === 0
+    ? emit("setOption", { el: option, idx: props.idx })
+    : emit("setOption", option);
 }
 </script>
 
@@ -51,6 +54,7 @@ function setOption(option) {
         :positionContent="positionContent"
         v-model="visibleContent"
         @setOption="setOption"
+        :activeItem="activeItem"
       />
     </Transition>
   </div>

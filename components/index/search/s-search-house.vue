@@ -23,7 +23,11 @@ function setOption(item) {
 <template>
   <form class="search-house" @submit.prevent>
     <div class="search-house__dropdown">
-      <DropdownMenu :options="houses" @setOption="setOption">
+      <DropdownMenu
+        :options="houses"
+        @setOption="setOption"
+        :activeItem="activeItem"
+      >
         <DropdownTrigger
           :name="!activeItem ? 'Дом' : activeItem.name"
           :activeItem="activeItem"

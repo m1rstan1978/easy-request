@@ -48,7 +48,7 @@ watch(currentPage, val => {
     <button
       class="pagination__btn"
       @click="prevPage"
-      :disabled="currentPage === 1"
+      :class="{ disabledBtn: currentPage === 1 }"
       v-if="totalPages > pageLimit"
     >
       <
@@ -66,7 +66,7 @@ watch(currentPage, val => {
       v-if="totalPages > pageLimit"
       class="pagination__btn"
       @click="nextPage"
-      :disabled="currentPage === totalPages"
+      :class="{ disabledBtn: currentPage === totalPages }"
     >
       >
     </button>
@@ -83,6 +83,7 @@ watch(currentPage, val => {
     width: 32px;
     height: 32px;
     font-size: 14px;
+    color: $text-color;
     border: 1px solid #ccc;
     border-radius: 3px;
     @include flex-center();
@@ -100,7 +101,7 @@ watch(currentPage, val => {
     border: 1px solid #ccc;
     border-radius: 3px;
     @include flex-center();
-    color: #6c757d;
+    color: $text-color;
     transition: all 0.3s ease;
     cursor: pointer;
     &:hover {
@@ -112,5 +113,10 @@ watch(currentPage, val => {
       color: white;
     }
   }
+}
+.disabledBtn {
+  color: #ccc;
+  pointer-events: none;
+  cursor: auto;
 }
 </style>

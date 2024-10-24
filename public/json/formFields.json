@@ -1,0 +1,105 @@
+[
+  {
+    "name": "house",
+    "dropdown": true,
+    "activeItemHouses": null,
+    "optionsDropDown": [
+      { "id": 1, "name": "Дом 1" },
+      { "id": 2, "name": "Дом 2" },
+      { "id": 3, "name": "Дом 3" },
+      { "id": 4, "name": "Дом 4" },
+      { "id": 5, "name": "Дом 5" },
+      { "id": 6, "name": "Дом 6" },
+      { "id": 7, "name": "Дом 7" },
+      { "id": 8, "name": "Дом 8" },
+      { "id": "a77f7f80-d9d2-4dcf-a5b9-ded6c76e286c", "name": "Лесная, 10" }
+    ],
+    "placeholder": "Адрес",
+    "regExpErrorText": "Дом из списка не выбран",
+    "regExpError": false,
+    "regExp": "^.{4,}$"
+  },
+  {
+    "name": "flat",
+    "dropdown": false,
+    "placeholder": "Квартира",
+    "inputValue": "",
+    "type": "number",
+    "regExpErrorText": "Квартира не выбрана или превышает лимит символов",
+    "regExpError": false,
+    "regExp": "^.{1,4}$"
+  },
+  {
+    "name": "deadline",
+    "dropdown": false,
+    "placeholder": "Срок",
+    "maskDate": true,
+    "inputValue": "",
+    "type": "text",
+    "regExpErrorText": "Проверьте формат даты и убедитесь, что время больше текущего",
+    "regExpError": false,
+    "regExp": "^.{4,}$"
+  },
+  {
+    "name": "surname",
+    "dropdown": false,
+    "placeholder": "Фамилия",
+    "maskDate": false,
+    "inputValue": "",
+    "type": "text",
+    "regExpErrorText": "Некорректно введена фамилия",
+    "regExpError": false,
+    "regExp": "^[А-Я][а-я]{1,}$"
+  },
+  {
+    "name": "first_name",
+    "dropdown": false,
+    "placeholder": "Имя",
+    "maskDate": false,
+    "inputValue": "",
+    "type": "text",
+    "regExpErrorText": "Некорректно введено Имя",
+    "regExpError": false,
+    "regExp": "^[А-Я][а-я]{1,}$"
+  },
+  {
+    "name": "middle_name",
+    "dropdown": false,
+    "placeholder": "Отчество",
+    "maskDate": false,
+    "inputValue": "",
+    "type": "text",
+    "regExpErrorText": "Некорректно введено Отчество",
+    "regExpError": false,
+    "regExp": "^[А-Я][а-я]{1,}$"
+  },
+  {
+    "name": "phone",
+    "dropdown": false,
+    "placeholder": "Телефон",
+    "maskDate": false,
+    "maskPhone": true,
+    "inputValue": "",
+    "type": "text",
+    "regExpErrorText": "Некорректно введен телефон",
+    "regExpError": false,
+    "regExp": "^[\\s\\S]{17}$"
+  },
+  {
+    "name": "textarea",
+    "dropdown": false,
+    "placeholder": "Описание заявки",
+    "maskDate": false,
+    "maskPhone": false,
+    "textArea": true,
+    "inputValue": "",
+    "type": "text",
+    "regExpErrorText": "Описание заявки содержит недопустимые символы или слишком короткое",
+    "regExpError": false,
+    "regExp": "^[А-Яа-я0-9.\\-\\s]{2,300}$",
+    "optionStyle": {
+      "minHeight": "98px",
+      "maxHeight": "98px"
+    }
+  }
+]

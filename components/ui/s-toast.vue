@@ -5,7 +5,7 @@ const props = defineProps({
   timeTimeOut: Number,
   iconSrc: String,
   title: String,
-  description: String,
+  description: [String, Array],
 });
 
 const emit = defineEmits();
@@ -16,7 +16,8 @@ const arrSettings = [
     position: "center",
     styleComponent: {
       top: "40px",
-      marginLeft: "0%",
+      left: "50%",
+      marginLeft: "-201.5px",
     },
   },
   {
@@ -54,26 +55,36 @@ watch(
       }, props.timeTimeOut);
       return;
     }
+
     clearTimer();
   }
 );
+
+onUnmounted(() => {
+  clearTimer();
+});
 </script>
 
 <template>
   <Transition>
     <div class="toast" v-if="openToast" :style="{ ...getStyle.styleComponent }">
+      <button class="toast__close" @click="closeT">
+        <img :src="'/images/ui/close-toast.svg'" />
+      </button>
       <div class="toast__content">
         <div class="toast__icon" v-if="iconSrc">
           <img :src="iconSrc" />
         </div>
         <div class="toast__info">
           <div class="toast__title">{{ title }}</div>
-          <p class="toast__des">{{ description }}</p>
+          <ul class="toast__arr" v-if="Array.isArray(description)">
+            <li v-for="item in description" :key="item">
+              {{ item.errorText }}
+            </li>
+          </ul>
+          <p class="toast__des" v-else>{{ description }}</p>
         </div>
       </div>
-      <button class="toast__close" @click="closeT">
-        <img :src="'/images/ui/close-toast.svg'" />
-      </button>
     </div>
   </Transition>
 </template>
@@ -81,10 +92,12 @@ watch(
 <style scoped lang="scss">
 .toast {
   position: fixed;
-  max-width: 403px;
+  width: 403px;
   background: white;
   border-radius: 5px;
   padding: 15px 30px 17px 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 101;
 
   &__content {
     display: flex;
@@ -117,14 +130,21 @@ watch(
     @include flex-center();
     width: 30px;
     height: 30px;
-    top: 8%;
-    right: 1%;
+    transform: translateY(-100%);
+    top: 30px;
+    right: 0;
     cursor: pointer;
-    img {
-      transition: all 0.3s ease;
-    }
-    &:hover img {
-      transform: scale(1.4);
+  }
+  &__arr {
+    margin-top: 2px;
+    li {
+      font-size: 14px;
+      font-weight: 400;
+      font-family: "Inter", sans-serif;
+      max-width: 315px;
+      margin-bottom: 7px;
+      word-wrap: break-word;
+      color: #8a8a8a;
     }
   }
 }
