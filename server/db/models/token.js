@@ -9,9 +9,13 @@ const Token = sequelize.define("Token", {
     primaryKey: true,
   },
   refresh_token: {
-    type: DataTypes.STRING(64),
+    type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: "12",
+  },
+  user_id: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    unique: true,
   },
 });
 

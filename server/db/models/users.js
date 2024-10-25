@@ -1,7 +1,6 @@
 import sequelize from "@/server/db/init";
 import { useHashPass } from "@/server/utils/hashPassword";
 import { DataTypes } from "sequelize";
-import Token from "./token";
 
 const User = sequelize.define("User", {
   id: {
@@ -31,13 +30,6 @@ const User = sequelize.define("User", {
         throw new Error(errorText);
       }
       this.setDataValue("password", useHashPass(value));
-    },
-  },
-  token_id: {
-    type: DataTypes.UUID,
-    references: {
-      model: Token,
-      key: "id",
     },
   },
 });

@@ -24,6 +24,11 @@ export default defineNuxtConfig({
     },
   },
 
+  runtimeConfig: {
+    jwtAccessSecret: process.env.JWT_ACCESS_SECRET_KEY,
+    jwtRefreshSecret: process.env.JWT_REFRESH_SECRET_KEY,
+  },
+
   modules: ["@nuxtjs/google-fonts", "@pinia/nuxt"],
   ssr: true,
 });
