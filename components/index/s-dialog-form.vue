@@ -1,14 +1,14 @@
 <script setup>
 import DropdownMenu from "@/components/ui/dropdown/s-dropdown-menu.vue";
 import DropdownTrigger from "@/components/ui/dropdown/s-dropdown-trigger.vue";
-import { useCreateRequest } from "@/store/createRequest";
+import { useRequestServer } from "~/store/useRequest";
 
 const props = defineProps({
   activeTable: Object,
 });
 const emit = defineEmits();
 
-const useRequest = useCreateRequest();
+const useRequest = useRequestServer();
 const arrErrors = ref([]);
 const isLoadingBtn = ref(false);
 const isLoadingDeleteBtn = ref(false);

@@ -14,7 +14,7 @@ export default defineEventHandler(async event => {
   });
 
   if (!user) {
-    return createError({
+    throw createError({
       statusCode: 400,
       message: "Неправильное имя пользователя или пароль",
     });
@@ -22,7 +22,7 @@ export default defineEventHandler(async event => {
 
   const decodePassword = await useDecodePass(password, user?.password);
   if (!decodePassword) {
-    return createError({
+    throw createError({
       statusCode: 400,
       message: "Неправильное имя пользователя или пароль",
     });
@@ -33,7 +33,7 @@ export default defineEventHandler(async event => {
     const { refreshToken, accessToken } = useCreateTokens(payload);
 
     if (!refreshToken || !accessToken) {
-      return createError({
+      throw createError({
         statusCode: 400,
         message: "Ошибка регистрации пользователя",
       });
@@ -41,6 +41,11 @@ export default defineEventHandler(async event => {
 
     await Token.destroy({ where: { user_id: user.id } });
     await Token.create({ refresh_token: refreshToken, user_id: user.id });
+
+    const maxAgeRefreshToken = 30 * 24 * 60 * 60 * 1000;
+    const maxAgeAccessToken = 15 * 60;
+    useCreateCookie(event, "refresh_token", refreshToken, maxAgeRefreshToken);
+    useCreateCookie(event, "access_token", accessToken, maxAgeAccessToken);
 
     return {
       refreshToken,

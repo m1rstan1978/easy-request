@@ -2,9 +2,9 @@
 import DialogForm from "@/components/index/s-dialog-form.vue";
 import Table from "@/components/index/table/s-table.vue";
 import Dialog from "@/components/ui/s-dialog.vue";
-import { useCreateRequest } from "@/store/createRequest";
+import { useRequestServer } from "~/store/useRequest";
 
-const useRequest = useCreateRequest();
+const useRequest = useRequestServer();
 
 const visibleDialog = ref(false);
 const activeTable = ref(null);

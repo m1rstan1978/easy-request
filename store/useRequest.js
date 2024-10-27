@@ -2,7 +2,7 @@ import formFieldsJson from "@/public/json/formFields.json";
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
 
-export const useCreateRequest = defineStore("createRequest", {
+export const useRequestServer = defineStore("useRequestServer", {
   state: () => {
     return {
       formFields: formFieldsJson,
