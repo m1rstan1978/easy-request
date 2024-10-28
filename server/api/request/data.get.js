@@ -1,5 +1,6 @@
 import { Request } from "@/server/db/association/userRequest";
 import { Op, fn } from "sequelize";
+import { useSequalizeError } from "~/server/utils/sequalizeError";
 
 export default defineEventHandler(async event => {
   const { page: pageQuery, pageSize: pageSizeQuery } = getQuery(event);
@@ -49,10 +50,8 @@ export default defineEventHandler(async event => {
       requests: foundRequests,
       recordInfo,
     };
-  } catch {
-    return createError({
-      statusCode: 500,
-      message: "Ошибка сервера",
-    });
+  } catch (e) {
+    const { message, statusCode } = useSequalizeError(e, e.statusCode);
+    return createError({ statusCode, message });
   }
 });

@@ -7,6 +7,7 @@ export const useSequalizeError = (error, statusCode) => {
         if (idx <= 0) {
           return err.message;
         }
+        return null;
       })
       .filter(el => el)
       .join("");
