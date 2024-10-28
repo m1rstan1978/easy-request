@@ -19,7 +19,7 @@ export default defineEventHandler(async event => {
     if (!refreshToken || !accessToken) {
       throw createError({
         statusCode: 400,
-        message: "Ошибка авторизации",
+        message: "Ошибка запроса",
       });
     }
 

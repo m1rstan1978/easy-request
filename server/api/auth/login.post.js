@@ -1,6 +1,6 @@
+import { User } from "@/server/db/association/userRequest";
 import { useDecodePass } from "@/server/utils/hashPassword";
 import Token from "~/server/db/models/token";
-import User from "~/server/db/models/users";
 import { useCreateTokens } from "~/server/utils/jwt";
 
 export default defineEventHandler(async event => {
