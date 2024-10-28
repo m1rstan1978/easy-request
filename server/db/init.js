@@ -10,6 +10,6 @@ const sequelize = new Sequelize(database, username, password, {
   dialect: "postgres",
 });
 
-// sequelize.sync({ force: true });
+sequelize.sync({ force: true });
 
 export default sequelize;
