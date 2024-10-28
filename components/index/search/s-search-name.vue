@@ -10,7 +10,7 @@ const styleOptions = {
     <div class="search-name__item">
       <UiSInput
         type="text"
-        placeholder="Поиск (№ заявки, название)"
+        placeholder="Поиск по описанию"
         :options="styleOptions"
       />
       <button class="search-name__submit" type="submit">
