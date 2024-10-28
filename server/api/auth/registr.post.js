@@ -2,6 +2,7 @@ import { User } from "@/server/db/association/userRequest";
 import { useCreateCookie } from "@/server/utils/cookie";
 import Token from "~/server/db/models/token";
 import { useCreateTokens } from "~/server/utils/jwt";
+import { useSequalizeError } from "~/server/utils/sequalizeError";
 
 export default defineEventHandler(async event => {
   const { username, password } = await readBody(event);
@@ -38,11 +39,13 @@ export default defineEventHandler(async event => {
     useCreateCookie(event, "refresh_token", refreshToken, maxAgeRefreshToken);
     useCreateCookie(event, "access_token", accessToken, maxAgeAccessToken);
 
-    return { refreshToken: refreshToken, accessToken: accessToken };
-  } catch {
-    return createError({
-      statusCode: 500,
-      message: "Ошибка сервера",
-    });
+    return {
+      refreshToken: refreshToken,
+      accessToken: accessToken,
+      user: await User.findAll(),
+    };
+  } catch (e) {
+    const { message, statusCode } = useSequalizeError(e, e.statusCode);
+    return createError({ statusCode, message });
   }
 });

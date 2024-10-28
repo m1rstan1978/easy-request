@@ -1,6 +1,7 @@
 import { useHasCookieTokens } from "@/server/utils/cookie";
 import Token from "~/server/db/models/token";
 import { useCreateTokens } from "~/server/utils/jwt";
+import { useSequalizeError } from "~/server/utils/sequalizeError";
 
 export default defineEventHandler(async event => {
   const { refreshCookie, accessCookie, user_id, accessDecoded } =
@@ -36,10 +37,8 @@ export default defineEventHandler(async event => {
       refreshToken: refreshToken,
       accessToken: accessToken,
     };
-  } catch {
-    return createError({
-      statusCode: 500,
-      message: "Ошибка сервера",
-    });
+  } catch (e) {
+    const { message, statusCode } = useSequalizeError(e, e.statusCode);
+    return createError({ statusCode, message });
   }
 });

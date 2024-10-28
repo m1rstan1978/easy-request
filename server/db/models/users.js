@@ -13,12 +13,11 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING(25),
     allowNull: false,
     unique: true,
-    set(value) {
-      if (!/^[a-zA-Z][a-zA-Z0-9]{2,25}$/.test(value)) {
-        const errorText = `Некорректное имя пользователя`;
-        throw new Error(errorText);
-      }
-      this.setDataValue("username", value);
+    validate: {
+      matches: {
+        args: /^[A-Za-z0-9]+$/,
+        msg: "Некорректное имя пользователя",
+      },
     },
   },
   password: {

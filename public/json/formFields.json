@@ -81,9 +81,9 @@
     "maskPhone": true,
     "inputValue": "",
     "type": "text",
-    "regExpErrorText": "Некорректно введен телефон",
+    "regExpErrorText": "Номер телефона должен быть в формате: 8 (XXX) XXX-XX-XX",
     "regExpError": false,
-    "regExp": "^[\\s\\S]{17}$"
+    "regExp": "^8 \\(\\d{3}\\) \\d{3}-\\d{2}-\\d{2}$"
   },
   {
     "name": "textarea",
@@ -96,7 +96,7 @@
     "type": "text",
     "regExpErrorText": "Описание заявки содержит недопустимые символы или слишком короткое",
     "regExpError": false,
-    "regExp": "^[А-Яа-я0-9.\\-\\s]{2,300}$",
+    "regExp": "^[А-Яа-я0-9.\\s-]{2,300}$",
     "optionStyle": {
       "minHeight": "98px",
       "maxHeight": "98px"
