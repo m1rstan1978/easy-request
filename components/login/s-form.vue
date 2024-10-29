@@ -1,4 +1,8 @@
 <script setup>
+import { useAuth } from "@/store/useAuth";
+
+const emit = defineEmits();
+
 const inputValLogin = ref("");
 const inputValPassword = ref("");
 const passwordHide = ref(false);
@@ -9,6 +13,8 @@ let isLoading = ref(false);
 const styleOptions = {
   padding: "8px 40px 8px 30px",
 };
+
+const useAuthPinia = useAuth();
 
 function validateInputs() {
   const arrValues = [inputValLogin, inputValPassword].filter(
@@ -22,12 +28,30 @@ function validateInputs() {
   return true;
 }
 
+const debounceSendAuth = useDebounce(authLogin, 300);
+
 function sendAuth() {
-  const validate = validateInputs();
   isLoading.value = true;
+  const validate = validateInputs();
   if (!validate) {
     isLoading.value = false;
     return;
+  }
+  debounceSendAuth();
+}
+
+async function authLogin() {
+  const [username, passsword] = [inputValLogin.value, inputValPassword.value];
+  try {
+    const { data, message } = await useAuthPinia.login(username, passsword);
+    if (message === "success") {
+      sessionStorage.setItem("accessToken", data.accessToken);
+      navigateTo("/");
+    }
+  } catch (e) {
+    emit("error", e.message);
+  } finally {
+    isLoading.value = false;
   }
 }
 

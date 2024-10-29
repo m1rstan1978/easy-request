@@ -30,5 +30,5 @@ export default defineNuxtConfig({
   },
 
   modules: ["@nuxtjs/google-fonts", "@pinia/nuxt"],
-  ssr: true,
+  ssr: false,
 });

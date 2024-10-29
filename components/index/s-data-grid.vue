@@ -124,7 +124,7 @@ watch(visibleDialog, val => {
     margin-bottom: 30px;
   }
   &__table {
-    min-height: calc(100vh - 360px);
+    min-height: calc(100vh - 420px);
     margin-bottom: 30px;
   }
   &__menu {

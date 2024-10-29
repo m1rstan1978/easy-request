@@ -1,10 +1,16 @@
-<script setup></script>
+<script setup>
+const emit = defineEmits();
+
+function error(err) {
+  emit("error", err);
+}
+</script>
 
 <template>
   <div class="card">
     <div class="card__content">
       <div class="card__title">Авторизация</div>
-      <LoginSForm />
+      <LoginSForm @error="error" />
     </div>
   </div>
 </template>

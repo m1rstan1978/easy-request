@@ -1,5 +1,13 @@
 <script setup>
 const openToast = ref(false);
+
+const toastTitle = ref("");
+const toastDes = ref("");
+
+function sendCreateError(err) {
+  openToast.value = true;
+  toastDes.value = err;
+}
 </script>
 
 <template>
@@ -12,9 +20,9 @@ const openToast = ref(false);
       @closeToast="openToast = false"
       iconSrc="/images/ui/error-icon.svg"
       title="Ошибка авторизации"
-      description="Неверно введены логин или пароль"
+      :description="toastDes"
     />
-    <LoginSCard @click="openToast = !openToast" />
+    <LoginSCard @error="sendCreateError" />
   </section>
 </template>
 

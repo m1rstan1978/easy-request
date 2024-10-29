@@ -19,7 +19,10 @@ export const useFetchRequest = defineStore("useFetchRequest", {
           return data;
         }
       } catch (e) {
-        throw e.data;
+        throw {
+          message: !e.data?.message ? "Ошибка сервера" : e.data?.message,
+          status: !e?.status ? 500 : e.status,
+        };
       }
     },
     async setFetch(url, options = {}, checkInter = false) {
@@ -42,7 +45,10 @@ export const useFetchRequest = defineStore("useFetchRequest", {
           }
           return;
         }
-        throw e.data;
+        throw {
+          message: !e.data?.message ? "Ошибка сервера" : e.data?.message,
+          status: !e?.status ? 500 : e.status,
+        };
       }
     },
   },
