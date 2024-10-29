@@ -7,17 +7,42 @@ export const useFetchRequest = defineStore("useFetchRequest", {
     };
   },
   actions: {
-    async setFetch(url, options = {}) {
+    async interceptorsFetch() {
+      try {
+        const url = `/api/auth/refresh?access_token_query=${sessionStorage.getItem(
+          "accessToken"
+        )}`;
+        const data = await $fetch(url, {
+          method: "GET",
+        });
+        if (!!data) {
+          return data;
+        }
+      } catch (e) {
+        throw e.data;
+      }
+    },
+    async setFetch(url, options = {}, checkInter = false) {
+      let checkInterceptorResponse = checkInter;
       try {
         return await $fetch(url, {
           ...options,
           headers: {
             ...options.headers,
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImU2YWRmOGRlLTA5YmItNGU3Mi1hNDRhLWJhMmVjYTA2NDg4NyIsImlhdCI6MTczMDE4NDUyNiwiZXhwIjoxNzMwMTg1NDI2fQ.450NzR-0u2En74oq0cBDpQrAvN0vxtJ6wxj4iKucomg`,
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
           },
         });
       } catch (e) {
-        console.log(e.status);
+        if (e.status === 401 && !checkInterceptorResponse) {
+          const { accessToken } = await this.interceptorsFetch();
+          if (accessToken) {
+            sessionStorage.setItem("accessToken", accessToken);
+            await this.setFetch(url, options, true);
+            checkInterceptorResponse = true;
+          }
+          return;
+        }
+        throw e.data;
       }
     },
   },

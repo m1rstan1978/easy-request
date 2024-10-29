@@ -47,7 +47,6 @@ export default defineEventHandler(async event => {
     useCreateCookie(event, "refresh_token", refreshToken, maxAgeRefreshToken);
 
     return {
-      refreshToken,
       accessToken,
     };
   } catch (e) {

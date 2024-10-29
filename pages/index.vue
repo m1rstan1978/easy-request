@@ -1,21 +1,27 @@
 <script setup>
 import { useFetchRequest } from "@/store/useFetch";
 
-const fetch = useFetchRequest();
+const useFetchApi = useFetchRequest();
 
-onMounted(async () => {
-  const response = await fetch.setFetch("/api/auth/registr", {
-    method: "POST",
-    body: {
-      username: "m1rstan",
-      password: "123vffdf",
-    },
-  });
-  console.log(response, useCookie("refresh_token"));
-});
+async function clickSide() {
+  try {
+    const response = await useFetchApi.setFetch("/api/auth/verify", {
+      method: "GET",
+      headers: {
+        Autorization: "Bearer fdsafasf",
+      },
+    });
+    console.log(response);
+  } catch (e) {
+    console.log(e?.message);
+  }
+}
+
+onMounted(async () => {});
 </script>
 
 <template>
+  <button @click="clickSide">павыфаы</button>
   <IndexSMain />
 </template>
 
