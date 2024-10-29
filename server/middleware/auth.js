@@ -7,6 +7,7 @@ const errorAuth = createError({
 
 export default defineEventHandler(async event => {
   const endpoints = [
+    "/api/auth/verify",
     "/api/request/create",
     "/api/request/data",
     "/api/request/edit",

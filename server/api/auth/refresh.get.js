@@ -4,8 +4,9 @@ import { useCreateTokens } from "~/server/utils/jwt";
 import { useSequalizeError } from "~/server/utils/sequalizeError";
 
 export default defineEventHandler(async event => {
+  const { access_token_query } = getQuery(event);
   const { refreshCookie, accessCookie, user_id, accessDecoded } =
-    useHasCookieTokens(event);
+    useHasCookieTokens(event, access_token_query);
 
   if (accessDecoded) {
     return {
@@ -28,10 +29,7 @@ export default defineEventHandler(async event => {
     await Token.create({ refresh_token: refreshToken, user_id: user_id });
 
     const maxAgeRefreshToken = 30 * 24 * 60 * 60 * 1000;
-    const maxAgeAccessToken = 15 * 60;
-
     useCreateCookie(event, "refresh_token", refreshToken, maxAgeRefreshToken);
-    useCreateCookie(event, "access_token", accessToken, maxAgeAccessToken);
 
     return {
       refreshToken: refreshToken,

@@ -10,9 +10,9 @@ export const useCreateCookie = (...items) => {
   });
 };
 
-export const useHasCookieTokens = event => {
+export const useHasCookieTokens = (event, access_token_query) => {
   const refreshCookie = getCookie(event, "refresh_token");
-  const accessCookie = getCookie(event, "access_token");
+  const accessCookie = access_token_query;
 
   const { jwtAccessSecret, jwtRefreshSecret } = useRuntimeConfig();
 
