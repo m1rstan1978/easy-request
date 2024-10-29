@@ -8,6 +8,20 @@ export default defineEventHandler(async event => {
   const { refreshCookie, accessCookie, user_id, accessDecoded } =
     useHasCookieTokens(event, access_token_query);
 
+  const findRefreshToken = await Token.findOne({
+    where: {
+      refresh_token: refreshCookie,
+    },
+    raw: true,
+  });
+
+  if (!findRefreshToken) {
+    throw createError({
+      statusCode: 401,
+      message: "Ошибка авторизации",
+    });
+  }
+
   if (accessDecoded) {
     return {
       refreshToken: refreshCookie,
