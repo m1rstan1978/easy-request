@@ -1,6 +1,15 @@
 <script setup>
-const currentPage = ref(1);
-const totalPages = ref(12);
+const props = defineProps({
+  totalPagesProps: Number,
+  currentPageProps: Number,
+});
+const emit = defineEmits();
+
+const route = useRoute();
+const router = useRouter();
+
+const currentPage = ref(props.currentPageProps);
+const totalPages = ref(props.totalPagesProps);
 const pageLimit = 5;
 
 const pages = computed(() => {
@@ -38,9 +47,18 @@ const nextPage = () => {
   }
 };
 
+onBeforeMount(() => {});
+
 watch(currentPage, val => {
-  //   console.log(val);
+  emit("changeCurrentPage", val);
 });
+watch(
+  () => props.totalPagesProps,
+  val => {
+    totalPages.value = val;
+    currentPage.value = 1;
+  }
+);
 </script>
 
 <template>

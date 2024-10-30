@@ -156,7 +156,7 @@ async function editRequest() {
     emit("setToast", {
       positionToast: "center",
       openToast: true,
-      titleToast: "Ошибка изменения заявки",
+      titleToast: "Не удалось изменить заявку",
       iconToast: "error",
       messageToast: e.message,
       timeOutToast: 3000,

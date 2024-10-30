@@ -6,8 +6,14 @@ import { useRequestServer } from "~/store/useRequest";
 
 const useRequest = useRequestServer();
 
+const route = useRoute();
+const router = useRouter();
+
 const visibleDialog = ref(false);
 const activeTable = ref(null);
+
+const currentPagePagination = ref(1);
+const totalPageCount = ref(12);
 
 const styleOptionsModal = {
   maxWidth: "720px",
@@ -46,8 +52,36 @@ async function setInfoTable() {
   useRequest.setArrRequests(response);
 }
 
+const useDebounceChangeCurrentPage = useDebounce(getArrTablePagination, 300);
+
+async function changeCurrentPage(val) {
+  await useNavigateToRouter(router, route, { page: val });
+  useRequest.setLoadingInfoTable();
+  useDebounceChangeCurrentPage();
+}
+
+async function getArrTablePagination() {
+  const response = await useRequest.getArrInfoTable();
+  useRequest.setArrRequests(response);
+}
+
 const getTableInfo = computed(() => {
   return useRequest.getArrTable;
+});
+
+async function calculatePagination() {
+  const { query } = route;
+  if (query?.page) {
+    currentPagePagination.value = Number(query.page);
+  }
+}
+
+onBeforeMount(() => {
+  calculatePagination();
+});
+
+onMounted(() => {
+  setInfoTable();
 });
 
 watch(visibleDialog, val => {
@@ -57,8 +91,10 @@ watch(visibleDialog, val => {
   }
 });
 
-onMounted(() => {
-  setInfoTable();
+watch(getTableInfo, val => {
+  if (val) {
+    totalPageCount.value = val.totalPages;
+  }
 });
 </script>
 
@@ -98,7 +134,11 @@ onMounted(() => {
         <IndexSCounter />
       </div>
       <div class="data-grid__pagination">
-        <UiSPagination />
+        <UiSPagination
+          :totalPagesProps="totalPageCount"
+          :currentPageProps="currentPagePagination"
+          @changeCurrentPage="changeCurrentPage"
+        />
       </div>
     </div>
     <Dialog
