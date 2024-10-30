@@ -4,6 +4,18 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["@/assets/style/main.scss"],
 
+  app: {
+    head: {
+      link: [
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          href: "/favicon.webp",
+        },
+      ],
+    },
+  },
+
   vite: {
     css: {
       preprocessorOptions: {
