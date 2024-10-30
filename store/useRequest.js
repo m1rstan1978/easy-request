@@ -126,15 +126,11 @@ export const useRequestServer = defineStore("useRequestServer", {
     },
     async createRequest(data) {
       const fetchApi = useFetchRequest();
-      const { request: response } = await fetchApi.setFetch(
-        "/api/request/create",
-        {
-          method: "POST",
-          body: data,
-        }
-      );
-
-      if (response) {
+      const response = await fetchApi.setFetch("/api/request/create", {
+        method: "POST",
+        body: data,
+      });
+      if (response?.request) {
         const getRequest = await this.getArrInfoTable(false);
         this.arrInfoTable = getRequest;
         return "success";
@@ -155,19 +151,18 @@ export const useRequestServer = defineStore("useRequestServer", {
     },
     async editRequest(data) {
       const fetchApi = useFetchRequest();
-      const { updateRequest: response } = await fetchApi.setFetch(
-        "/api/request/edit",
-        {
-          method: "PUT",
-          body: data,
+      const response = await fetchApi.setFetch("/api/request/edit", {
+        method: "PUT",
+        body: data,
+      });
+      if (response?.updateRequest) {
+        const { user_id, updatedAt, ...responseBody } = response.updateRequest;
+        const findIndexRequest = this.arrInfoTable.requests.findIndex(
+          el => el.id === responseBody.id
+        );
+        if (findIndexRequest >= 0) {
+          this.arrInfoTable.requests[findIndexRequest] = responseBody;
         }
-      );
-      const { user_id, updatedAt, ...responseBody } = response;
-      const findIndexRequest = this.arrInfoTable.requests.findIndex(
-        el => el.id === responseBody.id
-      );
-      if (findIndexRequest >= 0 && response) {
-        this.arrInfoTable.requests[findIndexRequest] = responseBody;
       }
     },
   },

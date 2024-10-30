@@ -40,8 +40,8 @@ export const useFetchRequest = defineStore("useFetchRequest", {
           const { accessToken } = await this.interceptorsFetch();
           if (accessToken) {
             sessionStorage.setItem("accessToken", accessToken);
-            await this.setFetch(url, options, true);
             checkInterceptorResponse = true;
+            return await this.setFetch(url, options, true);
           }
           return;
         }
