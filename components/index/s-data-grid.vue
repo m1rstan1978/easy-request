@@ -55,16 +55,16 @@ async function setInfoTable() {
   useRequest.setArrRequests(response);
 }
 
-const useDebounceChangeCurrentPage = useDebounce(getArrTablePagination, 100);
+const useDebounceChangeCurrentPage = useDebounce(getArrTablePagination, 300);
 
 async function changeCurrentPage(val) {
   currentPagePagination.value = val;
   useRequest.setLoadingInfoTable();
-  await useNavigateToRouter(router, route, { page: val });
-  useDebounceChangeCurrentPage();
+  useDebounceChangeCurrentPage.call(val);
 }
 
 async function getArrTablePagination() {
+  await useNavigateToRouter(router, route, { page: this });
   const response = await useRequest.getArrInfoTable();
   useRequest.setArrRequests(response);
 }
@@ -119,9 +119,7 @@ watch(getTableInfo, val => {
       </div>
     </div>
     <div class="data-grid__filter">
-      <IndexSearchSSearchFilter
-        @setCurrentPageFirst="currentPagePagination = 1"
-      />
+      <IndexSearchSSearchFilter />
     </div>
     <div class="data-grid__table">
       <Table @setItem="setItem" v-if="getTableInfo?.requests?.length > 0" />
