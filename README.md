@@ -19,6 +19,7 @@ WARNING: Сайт размещен на Vercel. Время отклика выш
 - **Custom UI**
 - **PostgreSQL**
 - **Sequelize**
+- **JWT**
 
 ### Основные функции:
 
