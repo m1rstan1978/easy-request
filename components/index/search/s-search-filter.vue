@@ -2,8 +2,12 @@
 
 <template>
   <div class="search-filter">
-    <IndexSearchSSearchName />
-    <IndexSearchSSearchHouse />
+    <IndexSearchSSearchName
+      @setCurrentPageFirst="$emit('setCurrentPageFirst')"
+    />
+    <IndexSearchSSearchHouse
+      @setCurrentPageFirst="$emit('setCurrentPageFirst')"
+    />
   </div>
 </template>
 

@@ -37,6 +37,8 @@ const houses = [
   { id: 31, name: "Удалить из поиска" },
 ];
 
+const emit = defineEmits();
+
 const request = useRequestServer();
 
 const router = useRouter();
@@ -50,14 +52,15 @@ const searchHousesDebounce = useDebounce(getInfoTableSearchHouse, 300);
 
 async function setOption(item) {
   request.setLoadingInfoTable();
+  emit("setCurrentPageFirst");
   if (item.id === 31) {
     activeItem.value = null;
-    await useNavigateToRouter(router, route, { house: "" });
+    await useNavigateToRouter(router, route, { house: "", page: 1 });
     searchHousesDebounce();
     return;
   }
   activeItem.value = item;
-  await useNavigateToRouter(router, route, { house: item.name });
+  await useNavigateToRouter(router, route, { house: item.name, page: 1 });
   searchHousesDebounce();
 }
 

@@ -6,6 +6,8 @@ const styleOptions = {
   border: "none",
 };
 
+const emit = defineEmits();
+
 const request = useRequestServer();
 
 const route = useRoute();
@@ -19,11 +21,15 @@ const searchDebounce = useDebounce(searchRequest, 300);
 
 function setStartSearch() {
   request.setLoadingInfoTable();
+  emit("setCurrentPageFirst");
   searchDebounce();
 }
 
 async function searchRequest() {
-  await useNavigateToRouter(router, route, { search: searchInputValue.value });
+  await useNavigateToRouter(router, route, {
+    search: searchInputValue.value,
+    page: 1,
+  });
   const response = await request.getArrInfoTable();
   request.setArrRequests(response);
 }

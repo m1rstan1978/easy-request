@@ -119,7 +119,9 @@ watch(getTableInfo, val => {
       </div>
     </div>
     <div class="data-grid__filter">
-      <IndexSearchSSearchFilter />
+      <IndexSearchSSearchFilter
+        @setCurrentPageFirst="currentPagePagination = 1"
+      />
     </div>
     <div class="data-grid__table">
       <Table @setItem="setItem" v-if="getTableInfo?.requests?.length > 0" />
