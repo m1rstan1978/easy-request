@@ -28,7 +28,7 @@ function validateInputs() {
   return true;
 }
 
-const debounceSendAuth = useDebounce(authLogin, 300);
+const debounceSendAuth = useDebounce(authLogin, 100);
 
 function sendAuth() {
   isLoading.value = true;

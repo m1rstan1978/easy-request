@@ -39,7 +39,6 @@ export default defineEventHandler(async event => {
 
     return {
       accessToken: accessToken,
-      user: await User.findAll(),
     };
   } catch (e) {
     const { message, statusCode } = useSequalizeError(e, e.statusCode);

@@ -13,7 +13,7 @@ const visibleDialog = ref(false);
 const activeTable = ref(null);
 
 const currentPagePagination = ref(1);
-const totalPageCount = ref(12);
+const totalPageCount = ref(1);
 
 const styleOptionsModal = {
   maxWidth: "720px",
@@ -52,7 +52,7 @@ async function setInfoTable() {
   useRequest.setArrRequests(response);
 }
 
-const useDebounceChangeCurrentPage = useDebounce(getArrTablePagination, 300);
+const useDebounceChangeCurrentPage = useDebounce(getArrTablePagination, 100);
 
 async function changeCurrentPage(val) {
   await useNavigateToRouter(router, route, { page: val });

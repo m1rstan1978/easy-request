@@ -77,7 +77,7 @@ function parseDeadlineForCreateReq(dateStr) {
   return useParseDeadline(dateStr);
 }
 
-const useDebounceCreate = useDebounce(createRequest, 300);
+const useDebounceCreate = useDebounce(createRequest, 100);
 
 const startLoading = () => {
   emit("setToast", {
@@ -87,7 +87,7 @@ const startLoading = () => {
   useDebounceCreate();
 };
 
-const useDebounceDelete = useDebounce(removeRequest, 300);
+const useDebounceDelete = useDebounce(removeRequest, 100);
 
 const startLoadingRemoveRequest = idRequest => {
   emit("setToast", {
@@ -123,7 +123,7 @@ async function removeRequest() {
   }
 }
 
-const useDebounceEdit = useDebounce(editRequest, 300);
+const useDebounceEdit = useDebounce(editRequest, 100);
 
 const startLoadingEditRequest = () => {
   emit("setToast", {
