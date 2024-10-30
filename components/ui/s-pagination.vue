@@ -5,9 +5,6 @@ const props = defineProps({
 });
 const emit = defineEmits();
 
-const route = useRoute();
-const router = useRouter();
-
 const currentPage = ref(props.currentPageProps);
 const totalPages = ref(props.totalPagesProps);
 const pageLimit = 5;
@@ -33,30 +30,35 @@ const goToPage = page => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
   }
+  emit("changeCurrentPage", page);
 };
 
 const prevPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--;
   }
+  emit("changeCurrentPage", currentPage.value);
 };
 
 const nextPage = () => {
   if (currentPage.value < totalPages.value) {
     currentPage.value++;
   }
+  emit("changeCurrentPage", currentPage.value);
 };
 
 onBeforeMount(() => {});
 
-watch(currentPage, val => {
-  emit("changeCurrentPage", val);
-});
 watch(
   () => props.totalPagesProps,
   val => {
     totalPages.value = val;
-    currentPage.value = 1;
+  }
+);
+watch(
+  () => props.currentPageProps,
+  val => {
+    currentPage.value = val;
   }
 );
 </script>
