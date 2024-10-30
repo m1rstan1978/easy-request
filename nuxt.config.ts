@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      title: "CRM | Service - Request",
       link: [
         {
           rel: "icon",
