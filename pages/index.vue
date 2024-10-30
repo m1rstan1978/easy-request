@@ -16,6 +16,13 @@ const isLoading = ref(false);
 
 const toastDes = ref("");
 
+const useDebounceLogout = useDebounce(logoutAcc, 300);
+
+const startLoading = () => {
+  isLoading.value = true;
+  useDebounceLogout();
+};
+
 async function logoutAcc() {
   isLoading.value = true;
   try {
@@ -43,7 +50,7 @@ async function logoutAcc() {
     title="Ошибка выхода"
     :description="toastDes"
   />
-  <UiSButton class="logout" @click="logoutAcc" :loading="isLoading"
+  <UiSButton class="logout" @click="startLoading" :loading="isLoading"
     >Выйти из аккаунта</UiSButton
   >
   <IndexSMain />
