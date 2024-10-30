@@ -1,75 +1,23 @@
-# Nuxt 3 Minimal Starter
+# ServiceManager
+WARNING: Сайт полностью размещен на Vercel. Время отклика выше обычного!
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Описание
 
-## Setup
+**ServiceManager** — это простая CRM-система для управления заявками на выполнение работ в сфере ЖКХ. Система позволяет администраторам входить в систему с помощью логина и пароля, а также добавлять, редактировать и удалять заявки на работы. 
 
-Make sure to install the dependencies:
+## Авторизация:
 
-```bash
-# npm
-npm install
+- **Логин**: admin
+- **Пароль**: admin01
 
-# pnpm
-pnpm install
+### Основные функции:
 
-# yarn
-yarn install
+- **Авторизация пользователей**: защищенный вход для администраторов.
+- **Управление заявками**: возможность добавления новых заявок, редактирования существующих и их удаления.
+- **Простой интерфейс**: интуитивно понятный пользовательский интерфейс для легкого управления заявками.
+- **Остальное можно увидеть на сайте :)**
 
-# bun
-bun install
-```
+### Примеры заявок:
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- Подкрасить царапины на стенах в гостиной.
+- Заменить потрескавшуюся плитку в ванной.
