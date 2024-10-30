@@ -1,54 +1,40 @@
 <script setup>
-const tBodyArr = [
-  {
-    number: 1,
-    created: "10.10.2024",
-    house: "Лесная, 10",
-    flat: "3",
-    first_name: "Дмитрий",
-    surname: "Забавкин",
-    middle_name: "Валентинович",
-    textarea: "Подкрасить царапины на стенах в гостиной",
-    deadline: "24.10.2024",
-    phone: "8 (953) 678-66-16",
-  },
-  {
-    number: 2,
-    created: "19.11.2024",
-    house: "Лесная, 10",
-    flat: "3",
-    first_name: "Александр",
-    surname: "Лемов",
-    middle_name: "Дмитриевич",
-    textarea: "Отрегулировать створки пластиковых окон.",
-    deadline: "01.01.2025",
-    phone: "8 (912) 555-12-12",
-  },
-];
+import { useRequestServer } from "@/store/useRequest";
+
+const request = useRequestServer();
 
 function getShortName(fullName) {
   const [lastName, firstName, middleName] = fullName.split(" ");
   const shortName = `${lastName} ${firstName[0]}.${middleName[0]}.`;
   return shortName;
 }
+
+const tBodyArr = computed(() => {
+  return request.getArrTable;
+});
 </script>
 
 <template>
-  <tbody class="tbody">
+  <tbody class="tbody" v-if="tBodyArr?.requests">
     <tr
       class="tbody__tr"
-      v-for="(item, idx) in tBodyArr"
+      v-for="(item, idx) in tBodyArr.requests"
       :key="idx"
-      @click="$emit('setItem', item)"
+      @click="
+        $emit('setItem', {
+          ...item,
+          idx: useGetNumberRequest(tBodyArr.startIndex, idx),
+        })
+      "
     >
       <td class="tbody__number">
         <div class="tbody__number_item">
-          {{ item.number }}
+          {{ useGetNumberRequest(tBodyArr.startIndex, idx) }}
         </div>
       </td>
       <td class="tbody__text">
         <div class="tbody__text_item">
-          {{ item.created }}
+          {{ useParseDate(item?.created) }}
         </div>
       </td>
       <td class="tbody__text">
@@ -72,7 +58,7 @@ function getShortName(fullName) {
       </td>
       <td class="tbody__text">
         <div class="tbody__text_item">
-          {{ item.deadline }}
+          {{ useParseDate(item.deadline) }}
         </div>
       </td>
     </tr>
@@ -113,6 +99,7 @@ function getShortName(fullName) {
       color: $text_color;
       font-size: 14px;
       margin-right: 20px;
+      @include text-ellipsis(1);
     }
   }
   &__des {

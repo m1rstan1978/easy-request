@@ -13,6 +13,9 @@ export const useAuth = defineStore("useAuth", {
     },
   },
   actions: {
+    setIsAuth(value = false) {
+      this.isAuth = value;
+    },
     async verify() {
       const fetchApi = useFetchRequest();
 

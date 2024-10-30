@@ -17,7 +17,7 @@ function setOption(item) {
   useRequest.setOptionDropdown(item);
 }
 
-function createRequest() {
+async function createRequest() {
   arrErrors.value = useRequest.checkErrorsFormFields();
   if (arrErrors.value.length > 0) {
     emit("setToast", {
@@ -28,20 +28,53 @@ function createRequest() {
       messageToast: arrErrors.value.filter((_, idx) => idx < 1),
       timeOutToast: 3000,
     });
-  } else {
-    emit("setToast", {
-      positionToast: "right",
-      openToast: true,
-      titleToast: "Успешно",
-      messageToast: `Ваша заявка была успешно ${
-        !props.activeTable ? "создана" : "сохранена"
-      }!`,
-      iconToast: "success",
-      timeOutToast: 6000,
-    });
-    emit("closeModal");
+    isLoadingBtn.value = false;
+    return;
   }
-  isLoadingBtn.value = false;
+  const infoJwt = useDecodeInfoJwt(sessionStorage.getItem("accessToken"));
+  const getValuesFields = {
+    ...useRequest.parseFormFields,
+    user_id: !infoJwt?.id ? null : infoJwt.id,
+  };
+
+  const parseDeadline = parseDeadlineForCreateReq(getValuesFields.deadline);
+  getValuesFields.deadline = !parseDeadline ? "" : parseDeadline;
+
+  await sendCreateRequest(getValuesFields);
+}
+
+async function sendCreateRequest(data) {
+  try {
+    const response = await useRequest.createRequest(data);
+    if (response) {
+      emit("setToast", {
+        positionToast: "right",
+        openToast: true,
+        titleToast: "Успешно",
+        messageToast: `Ваша заявка была успешно ${
+          !props.activeTable ? "создана" : "сохранена"
+        }!`,
+        iconToast: "success",
+        timeOutToast: 6000,
+      });
+    }
+    emit("closeModal");
+  } catch (e) {
+    emit("setToast", {
+      positionToast: "center",
+      openToast: true,
+      titleToast: "Ошибка создании заявки",
+      iconToast: "error",
+      messageToast: e.message,
+      timeOutToast: 3000,
+    });
+  } finally {
+    isLoadingBtn.value = false;
+  }
+}
+
+function parseDeadlineForCreateReq(dateStr) {
+  return useParseDeadline(dateStr);
 }
 
 const useDebounceCreate = useDebounce(createRequest, 300);
@@ -54,6 +87,85 @@ const startLoading = () => {
   useDebounceCreate();
 };
 
+const useDebounceDelete = useDebounce(removeRequest, 300);
+
+const startLoadingRemoveRequest = idRequest => {
+  emit("setToast", {
+    openToast: false,
+  });
+  isLoadingDeleteBtn.value = true;
+  useDebounceDelete.call(idRequest);
+};
+
+async function removeRequest() {
+  try {
+    await useRequest.removeRequest(this);
+    emit("setToast", {
+      positionToast: "right",
+      openToast: true,
+      titleToast: "Успешно",
+      messageToast: `Ваша заявка была успешно удалена!`,
+      iconToast: "success",
+      timeOutToast: 6000,
+    });
+    emit("closeModal");
+  } catch (e) {
+    emit("setToast", {
+      positionToast: "center",
+      openToast: true,
+      titleToast: "Ошибка удалении заявки",
+      iconToast: "error",
+      messageToast: e.message,
+      timeOutToast: 3000,
+    });
+  } finally {
+    isLoadingDeleteBtn.value = false;
+  }
+}
+
+const useDebounceEdit = useDebounce(editRequest, 300);
+
+const startLoadingEditRequest = () => {
+  emit("setToast", {
+    openToast: false,
+  });
+  isLoadingBtn.value = true;
+  useDebounceEdit.call(props.activeTable);
+};
+
+async function editRequest() {
+  const data = {
+    id: props.activeTable?.id,
+    created: props.activeTable?.created,
+    ...useRequest.parseFormFields,
+    deadline: parseDeadlineForCreateReq(useRequest.parseFormFields?.deadline),
+    user_id: useDecodeInfoJwt(sessionStorage.getItem("accessToken"))?.id,
+  };
+  try {
+    await useRequest.editRequest(data);
+    emit("setToast", {
+      positionToast: "right",
+      openToast: true,
+      titleToast: "Успешно",
+      messageToast: `Ваша заявка была успешно сохранена!`,
+      iconToast: "success",
+      timeOutToast: 6000,
+    });
+    emit("closeModal");
+  } catch (e) {
+    emit("setToast", {
+      positionToast: "center",
+      openToast: true,
+      titleToast: "Ошибка изменения заявки",
+      iconToast: "error",
+      messageToast: e.message,
+      timeOutToast: 3000,
+    });
+  } finally {
+    isLoadingBtn.value = false;
+  }
+}
+
 onUnmounted(() => {
   useRequest.cleanedFields();
 });
@@ -65,7 +177,7 @@ onUnmounted(() => {
       <div
         class="dialog-form__fields_item"
         v-for="(item, idx) in useRequest.getFormFields"
-        :key="item.name"
+        :key="item.id"
         :class="[
           'form__fields_item' + (idx + 1),
           {
@@ -125,12 +237,14 @@ onUnmounted(() => {
           :styleButton="{
             background: '#e60000',
           }"
+          @click="startLoadingRemoveRequest(activeTable.id)"
           >Удалить</UiSButton
         >
         <UiSButton
           class="dialog-form__buttons_save"
-          type="submit"
+          type="button"
           :loading="isLoadingBtn"
+          @click="startLoadingEditRequest"
           >Сохранить</UiSButton
         >
       </div>

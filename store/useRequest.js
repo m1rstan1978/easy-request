@@ -1,4 +1,5 @@
 import formFieldsJson from "@/public/json/formFields.json";
+import { useFetchRequest } from "@/store/useFetch";
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
 
@@ -6,16 +7,35 @@ export const useRequestServer = defineStore("useRequestServer", {
   state: () => {
     return {
       formFields: formFieldsJson,
+      arrInfoTable: null,
     };
   },
   getters: {
-    getFormFields(state) {
-      return state.formFields;
+    getFormFields() {
+      return this.formFields;
+    },
+    getArrTable() {
+      return this.arrInfoTable;
+    },
+    parseFormFields() {
+      return Object.fromEntries(
+        this.formFields.map(el => {
+          return el.name === "house"
+            ? [
+                el.name,
+                !el.activeItemHouses?.name ? "" : el.activeItemHouses.name,
+              ]
+            : [el.name, el.inputValue];
+        })
+      );
     },
   },
   actions: {
     setOptionDropdown(item) {
       this.formFields[item.idx].activeItemHouses = item.el;
+    },
+    setArrRequests(item) {
+      this.arrInfoTable = item;
     },
     fillDialogFields(item) {
       Object.entries(item).forEach(([key, value]) => {
@@ -75,6 +95,87 @@ export const useRequestServer = defineStore("useRequestServer", {
           ? { ...el, activeItemHouses: null }
           : { ...el, inputValue: "" }
       );
+    },
+    setLoadingInfoTable(value = null) {
+      this.arrInfoTable = value;
+    },
+    async getArrInfoTable(setNullArrTable = true) {
+      const fetchApi = useFetchRequest();
+
+      if (setNullArrTable) {
+        this.arrInfoTable = null;
+      }
+
+      const { query } = useRoute();
+      const queryToString = useToQueryString(query);
+
+      try {
+        const response = await fetchApi.setFetch(
+          `/api/request/data${queryToString}`,
+          {
+            method: "GET",
+          }
+        );
+        if (response) {
+          return response;
+        }
+        return [];
+      } catch {
+        return [];
+      }
+    },
+    async createRequest(data) {
+      const fetchApi = useFetchRequest();
+      const { request: response } = await fetchApi.setFetch(
+        "/api/request/create",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+
+      const { query } = useRoute();
+      const pageSize = parseInt(query?.pageSize) || 5;
+
+      const { createdAt, updatedAt, user_id, ...dataResponse } = response;
+
+      if (response && this.arrInfoTable?.requests?.length < pageSize) {
+        this.arrInfoTable.requests.push({ ...dataResponse, user_id: null });
+      }
+
+      if (dataResponse && this.arrInfoTable) {
+        return "success";
+      }
+      return null;
+    },
+    async removeRequest(id) {
+      const fetchApi = useFetchRequest();
+      const response = await fetchApi.setFetch(`/api/request/remove?id=${id}`, {
+        method: "DELETE",
+      });
+      if (response) {
+        const getRequest = await this.getArrInfoTable(false);
+        this.arrInfoTable = getRequest;
+        return response;
+      }
+      return null;
+    },
+    async editRequest(data) {
+      const fetchApi = useFetchRequest();
+      const { updateRequest: response } = await fetchApi.setFetch(
+        "/api/request/edit",
+        {
+          method: "PUT",
+          body: data,
+        }
+      );
+      const { user_id, updatedAt, ...responseBody } = response;
+      const findIndexRequest = this.arrInfoTable.requests.findIndex(
+        el => el.id === responseBody.id
+      );
+      if (findIndexRequest >= 0 && response) {
+        this.arrInfoTable.requests[findIndexRequest] = responseBody;
+      }
     },
   },
 });

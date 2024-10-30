@@ -65,9 +65,10 @@ export default defineEventHandler(async event => {
     }
 
     if (!changes) {
-      return {
-        fieldsRequest,
-      };
+      throw createError({
+        statusCode: 400,
+        message: "Нет новых данных для сохранения",
+      });
     }
 
     const updateRequest = await request.update(fieldsRequest);

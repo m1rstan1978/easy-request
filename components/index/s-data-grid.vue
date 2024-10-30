@@ -30,6 +30,7 @@ function setToast(item) {
 }
 
 function setItem(item) {
+  item.deadline = useParseDate(item?.deadline);
   useRequest.fillDialogFields(item);
   activeTable.value = item;
   visibleDialog.value = true;
@@ -40,11 +41,24 @@ function closeModal() {
   activeTable.value = null;
 }
 
+async function setInfoTable() {
+  const response = await useRequest.getArrInfoTable();
+  useRequest.setArrRequests(response);
+}
+
+const getTableInfo = computed(() => {
+  return useRequest.getArrTable;
+});
+
 watch(visibleDialog, val => {
   const errorIcon = toastOptions.value.iconToast;
   if (!val && errorIcon === "error") {
     toastOptions.value.openToast = false;
   }
+});
+
+onMounted(() => {
+  setInfoTable();
 });
 </script>
 
@@ -68,7 +82,16 @@ watch(visibleDialog, val => {
       <IndexSearchSSearchFilter />
     </div>
     <div class="data-grid__table">
-      <Table @setItem="setItem" />
+      <Table @setItem="setItem" v-if="getTableInfo?.requests?.length > 0" />
+      <div class="data-grid__loading" v-else-if="getTableInfo === null">
+        <div class="data-grid__loading_spinner">
+          <UiSSpinner
+            :borderColor="'#50b053  '"
+            :topColor="'rgba(255, 255, 255, 0.3)'"
+          />
+        </div>
+      </div>
+      <div class="data-grid__empty" v-else>Пусто</div>
     </div>
     <div class="data-grid__menu">
       <div class="data-grid__counter">
@@ -89,10 +112,21 @@ watch(visibleDialog, val => {
             {{
               !activeTable
                 ? "Создание заявки"
-                : `Заявка № ${activeTable.number} (от ${activeTable.created})`
+                : `Заявка № ${activeTable.idx} (от ${useParseDate(
+                    activeTable.created
+                  )})`
             }}
           </div>
-          <div class="data-grid__modal_status">Активная</div>
+          <div class="data-grid__modal_status">
+            {{
+              `${
+                new Date(useParseDeadline(activeTable?.deadline)).getTime() >
+                  new Date().getTime() || !activeTable
+                  ? "Активная"
+                  : "Завершена"
+              }`
+            }}
+          </div>
         </div>
       </div>
       <DialogForm
@@ -126,6 +160,21 @@ watch(visibleDialog, val => {
   &__table {
     min-height: calc(100vh - 420px);
     margin-bottom: 30px;
+  }
+  &__loading {
+    @include flex-center();
+    transform: translateY(100px);
+    &_spinner {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  &__empty {
+    text-align: center;
+    transform: translateY(100px);
+    font-size: 24px;
+    color: $text_color;
+    font-weight: 500;
   }
   &__menu {
     display: flex;

@@ -3,7 +3,7 @@ import { Op, fn } from "sequelize";
 import { useSequalizeError } from "~/server/utils/sequalizeError";
 
 export default defineEventHandler(async event => {
-  const { page: pageQuery, pageSize: pageSizeQuery } = getQuery(event);
+  const { page: pageQuery, pagesize: pageSizeQuery } = getQuery(event);
   const querySearch = [
     {
       name: "search",
@@ -26,13 +26,27 @@ export default defineEventHandler(async event => {
   });
 
   const page = parseInt(pageQuery) || 1;
-  const pageSize = parseInt(pageSizeQuery) || 10;
+  const pageSize = parseInt(pageSizeQuery) || 5;
+
+  const attributesKey = [
+    "id",
+    "created",
+    "house",
+    "flat",
+    "deadline",
+    "surname",
+    "first_name",
+    "middle_name",
+    "phone",
+    "textarea",
+  ];
 
   try {
     const foundRequests = await Request.findAll({
       where: querySearchObj,
       limit: pageSize,
       offset: (page - 1) * pageSize,
+      attributes: attributesKey,
       raw: true,
     });
 
@@ -43,12 +57,14 @@ export default defineEventHandler(async event => {
     const startIndex = (page - 1) * pageSize + 1;
     const endIndex = Math.min(startIndex + pageSize - 1, totalCount);
 
-    const recordInfo = `${startIndex}–${endIndex} из ${totalCount} записей`;
+    const recordInfo = `${startIndex}–${endIndex}`;
 
     return {
       totalPages: Math.ceil(totalCount / pageSize),
       requests: foundRequests,
+      totalCount,
       recordInfo,
+      startIndex,
     };
   } catch (e) {
     const { message, statusCode } = useSequalizeError(e, e.statusCode);

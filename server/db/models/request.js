@@ -90,11 +90,16 @@ const Request = sequelize.define("Request", {
     allowNull: false,
     validate: {
       matches: {
-        args: /^[А-Яа-я0-9.\s-]{2,300}$/,
+        args: /^(?=.*\S)[a-zA-Zа-яА-Я0-9\s!?.,]{2,300}$/,
         msg: "Описание заявки содержит недопустимые символы или слишком короткое",
       },
     },
     unique: true,
+  },
+  created: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
   },
   user_id: {
     type: DataTypes.UUID,
