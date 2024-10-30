@@ -1,7 +1,6 @@
 # ServiceManager
 WARNING: Сайт полностью размещен на Vercel. Время отклика выше обычного!
 
-## Описание
 Ссылка на сайт - https://full-stack-service-request.vercel.app/
 
 ## Описание
