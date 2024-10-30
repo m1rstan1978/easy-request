@@ -17,6 +17,7 @@ const isLoading = ref(false);
 const toastDes = ref("");
 
 async function logoutAcc() {
+  isLoading.value = true;
   try {
     const response = await useAuthPinia.logout();
     if (response) {
