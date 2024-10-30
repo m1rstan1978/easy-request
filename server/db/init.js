@@ -14,6 +14,7 @@
 
 // export default sequelize;
 
+import pg from "pg";
 import { Sequelize } from "sequelize";
 
 const database = process.env.DB_POSTGRESSQL_DATABASE;
@@ -25,6 +26,7 @@ const sequelize = new Sequelize(process.env.DB_POSTGRES_LINK, {
   dialect: "postgres",
   protocol: "postgres",
   dialectOptions: {},
+  dialectModule: pg,
 });
 
 // sequelize.sync({ force: true });
