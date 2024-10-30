@@ -1,4 +1,8 @@
 <script setup>
+useSeoMeta({
+  title: "Авторизация пользователя",
+});
+
 definePageMeta({
   middleware: ["auth"],
 });

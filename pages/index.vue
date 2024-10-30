@@ -1,6 +1,10 @@
 <script setup>
 import { useAuth } from "~/store/useAuth";
 
+useSeoMeta({
+  title: "Главная страница с заявками",
+});
+
 definePageMeta({
   middleware: ["auth"],
 });
