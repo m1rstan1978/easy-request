@@ -26,7 +26,7 @@ export default defineEventHandler(async event => {
   });
 
   const page = parseInt(pageQuery) || 1;
-  const pageSize = parseInt(pageSizeQuery) || 5;
+  const pageSize = parseInt(pageSizeQuery) || 6;
 
   const attributesKey = [
     "id",

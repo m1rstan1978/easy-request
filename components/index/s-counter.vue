@@ -40,18 +40,8 @@ const totalRequests = ref(null);
 const searchPagesizeRequests = useDebounce(getRequests, 300);
 
 async function setQueryPagesize(clickActive = false, item) {
-  const { query } = useRoute();
-
-  let size;
-
-  if (query?.pagesize) {
-    size = query.pagesize;
-  } else {
-    size = !activeItem?.value?.name ? 5 : activeItem.value.name;
-  }
-
   await useNavigateToRouter(router, route, {
-    pagesize: size,
+    pagesize: activeItem.value.name,
   });
   if (clickActive) {
     await useNavigateToRouter(router, route, {
