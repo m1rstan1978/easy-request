@@ -12,7 +12,10 @@ const router = useRouter();
 const visibleDialog = ref(false);
 const activeTable = ref(null);
 
-const currentPagePagination = ref(1);
+const currentPagePagination = ref(
+  !route?.query?.page ? 1 : Number(route.query.page)
+);
+
 const totalPageCount = ref(1);
 
 const styleOptionsModal = {
@@ -55,6 +58,7 @@ async function setInfoTable() {
 const useDebounceChangeCurrentPage = useDebounce(getArrTablePagination, 100);
 
 async function changeCurrentPage(val) {
+  currentPagePagination.value = val;
   await useNavigateToRouter(router, route, { page: val });
   useRequest.setLoadingInfoTable();
   useDebounceChangeCurrentPage();
@@ -131,7 +135,7 @@ watch(getTableInfo, val => {
     </div>
     <div class="data-grid__menu">
       <div class="data-grid__counter">
-        <IndexSCounter />
+        <IndexSCounter @setCurrentPageFirst="currentPagePagination = 1" />
       </div>
       <div class="data-grid__pagination">
         <UiSPagination

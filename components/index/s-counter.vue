@@ -4,6 +4,8 @@ import DropdownMenu from "~/components/ui/dropdown/s-dropdown-menu.vue";
 
 import { useRequestServer } from "@/store/useRequest";
 
+const emit = defineEmits();
+
 const router = useRouter();
 const route = useRoute();
 const useRequest = useRequestServer();
@@ -46,7 +48,9 @@ async function setQueryPagesize(clickActive = false, item) {
   if (clickActive) {
     await useNavigateToRouter(router, route, {
       pagesize: item.name,
+      page: 1,
     });
+    emit("setCurrentPageFirst");
     useRequest.setLoadingInfoTable();
     searchPagesizeRequests();
   }
