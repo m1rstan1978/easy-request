@@ -134,16 +134,9 @@ export const useRequestServer = defineStore("useRequestServer", {
         }
       );
 
-      const { query } = useRoute();
-      const pageSize = parseInt(query?.pageSize) || 5;
-
-      const { createdAt, updatedAt, user_id, ...dataResponse } = response;
-
-      if (response && this.arrInfoTable?.requests?.length < pageSize) {
-        this.arrInfoTable.requests.push({ ...dataResponse, user_id: null });
-      }
-
-      if (dataResponse && this.arrInfoTable) {
+      if (response) {
+        const getRequest = await this.getArrInfoTable(false);
+        this.arrInfoTable = getRequest;
         return "success";
       }
       return null;

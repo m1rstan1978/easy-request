@@ -82,7 +82,9 @@ watch(getTableInfo, val => {
 <template>
   <div class="counter">
     <div class="counter__content">
-      <span class="counter__span">{{ recordInfo }}</span>
+      <span class="counter__span">{{
+        totalRequests === 0 ? "0" : recordInfo
+      }}</span>
       из
       <span class="counter__span">{{ totalRequests }} записей</span>
     </div>
