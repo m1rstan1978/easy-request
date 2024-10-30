@@ -22,7 +22,7 @@ const paginationItems = [
 ];
 
 const activeItem = ref(
-  !route?.query.pagesize ? { name: 10 } : { name: Number(route.query.pagesize) }
+  !route?.query.pagesize ? { name: 6 } : { name: Number(route.query.pagesize) }
 );
 
 function setOption(item) {
