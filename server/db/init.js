@@ -27,6 +27,6 @@ const sequelize = new Sequelize(process.env.DB_POSTGRES_LINK, {
   dialectOptions: {},
 });
 
-sequelize.sync({ force: true });
+// sequelize.sync({ force: true });
 
 export default sequelize;

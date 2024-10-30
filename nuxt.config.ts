@@ -4,6 +4,12 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   css: ["@/assets/style/main.scss"],
 
+  app: {
+    head: {
+      title: "System Request",
+    },
+  },
+
   vite: {
     css: {
       preprocessorOptions: {
