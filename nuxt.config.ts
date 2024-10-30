@@ -10,7 +10,7 @@ export default defineNuxtConfig({
         {
           rel: "icon",
           type: "image/x-icon",
-          href: "/favicon.webp",
+          href: "/favicon.svg",
         },
       ],
     },
