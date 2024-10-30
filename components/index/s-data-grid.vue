@@ -59,8 +59,8 @@ const useDebounceChangeCurrentPage = useDebounce(getArrTablePagination, 100);
 
 async function changeCurrentPage(val) {
   currentPagePagination.value = val;
-  await useNavigateToRouter(router, route, { page: val });
   useRequest.setLoadingInfoTable();
+  await useNavigateToRouter(router, route, { page: val });
   useDebounceChangeCurrentPage();
 }
 

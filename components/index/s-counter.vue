@@ -46,12 +46,12 @@ async function setQueryPagesize(clickActive = false, item) {
     pagesize: activeItem.value.name,
   });
   if (clickActive) {
+    useRequest.setLoadingInfoTable();
     await useNavigateToRouter(router, route, {
       pagesize: item.name,
       page: 1,
     });
     emit("setCurrentPageFirst");
-    useRequest.setLoadingInfoTable();
     searchPagesizeRequests();
   }
 }
