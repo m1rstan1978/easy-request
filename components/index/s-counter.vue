@@ -29,6 +29,7 @@ const activeItem = ref(
 
 function setOption(item) {
   activeItem.value = item;
+  useRequest.setLoadingInfoTable();
   setQueryPagesize(true, item);
 }
 
@@ -46,7 +47,6 @@ async function setQueryPagesize(clickActive = false, item) {
     pagesize: activeItem.value.name,
   });
   if (clickActive) {
-    useRequest.setLoadingInfoTable();
     await useNavigateToRouter(router, route, {
       pagesize: item.name,
       page: 1,
