@@ -1,3 +1,5 @@
+//Предназначен для расширения
+
 // import { User } from "@/server/db/association/userRequest";
 // import { useCreateCookie } from "@/server/utils/cookie";
 // import Token from "~/server/db/models/token";
