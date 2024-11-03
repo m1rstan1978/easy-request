@@ -1,11 +1,6 @@
 import { defineStore } from "pinia";
 
 export const useFetchRequest = defineStore("useFetchRequest", {
-  state: () => {
-    return {
-      useFetchApi: null,
-    };
-  },
   actions: {
     async interceptorsFetch() {
       try {
