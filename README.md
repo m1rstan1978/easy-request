@@ -7,7 +7,7 @@
 ## Стек технологий
 
 - **SCSS**
-- **Nuxt3 / Server**
+- **Nuxt3**
 - **Custom UI**
 - **PostgreSQL**
 - **Sequelize**
