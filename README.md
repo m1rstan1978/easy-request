@@ -1,10 +1,4 @@
 # ServiceManager
-Ссылка на сайт - https://full-stack-service-request.vercel.app/
-
-## Авторизация:
-
-- **Логин**: admin
-- **Пароль**: admin01
 
 ## Описание
 
